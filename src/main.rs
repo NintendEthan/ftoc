@@ -1,14 +1,16 @@
-use std::io::*;
-use text_io::read;
+use std::env;
+mod calc;
 
 fn main() {
-    println!("Converting celcius to fahrenheit.");
-    print!("Fahrenheit: ");
-
-    stdout().flush().unwrap();
-
-    let f: i32 = read!();
-    let c = ((f - 32) * 5) / 9;
-
-    println!("Celcius: {}", c);
+    let args: Vec<String> = env::args().collect();
+    let f: i32 = match args[1].trim().parse() {
+        Ok(num) => num,
+        Err(_) => {
+            println!("please input a number!");
+            std::process::exit(1);
+        }
+    };
+    let c: i32 = calc::conv(&f);
+    println!("Converting {} fahrenheit to celcius.", f);
+    println!("{}", c);
 }
