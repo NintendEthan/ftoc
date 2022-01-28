@@ -1,8 +1,8 @@
-use std::env;
+use std::env::args;
 mod calc;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let args: Vec<String> = args().collect();
     let f: i32 = match args[1].trim().parse() {
         Ok(num) => num,
         Err(_) => {
