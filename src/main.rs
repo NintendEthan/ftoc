@@ -1,16 +1,18 @@
-use std::env::args;
+extern crate clap;
+use clap::Parser;
 mod calc;
 
+#[derive(Parser)]
+#[clap(author, version, about, long_about = None)]
+struct Cli {
+    #[clap(short, long)]
+    farenheit: i32,
+}
+
 fn main() {
-    let args: Vec<String> = args().collect();
-    let f: i32 = match args[1].trim().parse() {
-        Ok(num) => num,
-        Err(_) => {
-            println!("please input a number!");
-            std::process::exit(1);
-        }
-    };
-    let c: i32 = calc::conv(&f);
-    println!("Converting {} fahrenheit to celcius.", f);
+    let cli = Cli::parse();
+
+    let c: i32 = calc::conv(&cli.farenheit);
+    println!("Converting {} fahrenheit to celcius.", cli.farenheit);
     println!("{}", c);
 }
